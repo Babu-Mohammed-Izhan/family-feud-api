@@ -1,15 +1,14 @@
-import { Application } from "express";
+import {
+  CreateService,
+  FindAllService,
+  FindOneService,
+} from "../controllers/question.controller";
+import { Router } from "express";
 
-export const routes = (app: Application) => {
-  const questions = require("../controllers/question.controller");
+export const questionRouter = Router();
 
-  var router = require("express").Router();
+questionRouter.post("/", CreateService);
 
-  router.post("/", questions.create);
+questionRouter.get("/", FindAllService);
 
-  router.get("/", questions.findAll);
-
-  router.get("/:id", questions.findOne);
-
-  app.use("/api", router);
-};
+questionRouter.get("/:id", FindOneService);

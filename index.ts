@@ -1,12 +1,13 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { db } from "./app/models/index";
+import { sequelize } from "./app/models/index";
+import { questionRouter } from "./app/routes/questions.routes";
 
 const app = express();
 
 app.use(cors());
 
-db.sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 
@@ -19,7 +20,7 @@ app.get("/", (_req: Request, res: Response) =>
   })
 );
 
-require("./app/routes/questions.routes")(app);
+app.use("/api", questionRouter);
 
 const port = 5000;
 

@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 
-import { db } from "../models";
-const Question = db.questions;
-const Op = db.Sequelize.Op;
+import Question from "../models/questions.model";
 
-exports.create = (req: Request, res: Response) => {
+const CreateService = (req: Request, res: Response) => {
   if (!req.body.question) {
     res.status(400).send({
       message: "Content can not be empty!",
@@ -25,10 +23,10 @@ exports.create = (req: Request, res: Response) => {
   };
 
   Question.create(question)
-    .then((data) => {
+    .then((data: any) => {
       res.send(data);
     })
-    .catch((err) => {
+    .catch((err: { message: any }) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while creating the Tutorial.",
@@ -36,15 +34,12 @@ exports.create = (req: Request, res: Response) => {
     });
 };
 
-exports.findAll = (req, res) => {
-  const question = req.query.question;
-  var condition = question ? { questions: { [Op.iLike]: `%${title}%` } } : null;
-
-  Question.findAll({ where: condition })
-    .then((data) => {
+const FindAllService = (_req: Request, res: Response) => {
+  Question.findAll({})
+    .then((data: any) => {
       res.send(data);
     })
-    .catch((err) => {
+    .catch((err: { message: any }) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving tutorials.",
@@ -52,11 +47,11 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+const FindOneService = (req: Request, res: Response) => {
   const id = req.params.id;
 
   Question.findByPk(id)
-    .then((data) => {
+    .then((data: any) => {
       if (data) {
         res.send(data);
       } else {
@@ -65,9 +60,11 @@ exports.findOne = (req, res) => {
         });
       }
     })
-    .catch((err) => {
+    .catch((_err: any) => {
       res.status(500).send({
         message: "Error retrieving Question with id=" + id,
       });
     });
 };
+
+export { CreateService, FindAllService, FindOneService };
