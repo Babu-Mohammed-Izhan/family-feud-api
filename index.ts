@@ -13,7 +13,7 @@ db.sequelize.sync({ force: true }).then(() => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) =>
+app.get("/", (_req, res) =>
   res.status(200).send({
     message: "Hello World!",
   })
