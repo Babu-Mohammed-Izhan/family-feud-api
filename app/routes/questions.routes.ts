@@ -1,4 +1,6 @@
-module.exports = (app) => {
+import { Application } from "express";
+
+export const routes = (app: Application) => {
   const questions = require("../controllers/question.controller");
 
   var router = require("express").Router();

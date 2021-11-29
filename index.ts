@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const db = require("./app/models");
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { db } from "./app/models/index";
 
 const app = express();
 
@@ -13,7 +13,7 @@ db.sequelize.sync({ force: true }).then(() => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (_req, res) =>
+app.get("/", (_req: Request, res: Response) =>
   res.status(200).send({
     message: "Hello World!",
   })

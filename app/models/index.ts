@@ -1,14 +1,22 @@
-const Sequelize = require("sequelize");
+import { Sequelize } from "sequelize";
+import { QuestionType, QuestionFactory } from "./questions.model";
 
-const sequelize = new Sequelize(
+const dbconfig = new Sequelize(
   "postgres://postgres:izhan@localhost:5432/familyfeuddb"
 );
 
-const db = {};
+interface dbtype {
+  Sequelize: Sequelize;
+  sequelize: Sequelize;
+  questions: QuestionType;
+}
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+type database = dbtype;
 
-db.questions = require("./questions.model.js")(sequelize, Sequelize);
+const db: database = {
+  Sequelize,
+  sequelize: dbconfig,
+  questions: QuestionFactory(dbconfig),
+};
 
-module.exports = db;
+export { db };

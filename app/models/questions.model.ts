@@ -1,30 +1,47 @@
-module.exports = (sequelize, Sequelize) => {
-  const Question = sequelize.define("question", {
+import { DataTypes, Sequelize } from "sequelize";
+
+export interface QuestionType {
+  question: string;
+  a1: string;
+  a2: string;
+  a3: string;
+  a4: string;
+  a5: string;
+  a6: string;
+  a7: string;
+}
+
+export const QuestionFactory = (sequelize: Sequelize) => {
+  return sequelize.define("question", {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     question: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
+      unique: true,
     },
     a1: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a2: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a3: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a4: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a5: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a6: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     a7: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
   });
-
-  return Question;
 };

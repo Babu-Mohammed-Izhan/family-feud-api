@@ -1,8 +1,10 @@
-const db = require("../models");
+import { Request, Response } from "express";
+
+import { db } from "../models";
 const Question = db.questions;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
+exports.create = (req: Request, res: Response) => {
   if (!req.body.question) {
     res.status(400).send({
       message: "Content can not be empty!",
